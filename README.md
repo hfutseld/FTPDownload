@@ -1,0 +1,2 @@
+# FTPDownload
+一个服务需要先下载大资源的FTP工具，这个服务是放在docker中的，将这个FTP下载工具也放在另外一个docker中，在kubernetes中启动这个服务容器前先init这个FTP下载容器
