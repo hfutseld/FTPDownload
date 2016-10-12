@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+    name: guestbook
+    labels:
+        app : guestbook
+spec:
+    replicas: 1
+    selector:
+        app: guestbook
+    template:
+        metadata:
+            labels:
+                app: guestbook
+            annotations:
+               pod.alpha.kubernetes.io/init-containers: '[
+               {
+                 "name": "init",
+                 "image": "仓库地址/downresource:latest",
+                 "command": ["python3.4", "/down-resource/FTPDownload.py", "mas-sts", "1001", "0", "1", "下载文件名1,FTP地址,下载文件1的MD5值", "载文件名2,FTP地址,下载文件2的MD5值"],
+	 	 "volumeMounts": [
+                 {
+                     "name": "persistent-storage",
+                     "mountPath": "/data"
+                 }
+                 ]
+               }
+              ]' 
+
+        spec:
+            volumes:
+            -    name: "persistent-storage"
+                 hostPath:
+                     path: "/tmp/data"
+            containers:
+            -    name: guestbook
+                 image: "该服务的docker镜像"
+                 ports:
+                 -    containerPort: 3000
+                 volumeMounts:
+                 -    name: "persistent-storage"
+                      mountPath: "/data"
+
