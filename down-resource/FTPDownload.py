@@ -119,24 +119,6 @@ def isFileCorrect(file_name,md5):
             return -1
     return 0
 
-#生成currentConfige文件
-'''def makeCurrentConfig(version_num,file_list):
-    sys_type = platform.system()
-    if sys_type == 'Windows':
-        dir_separator = '\\'
-        currentConfig_dir = '.\\data\\temp\\ats-sms\\1001'
-    else:
-        dir_separator = '/'
-        currentConfig_dir = './data/temp'
-    comp_name = "currentConfig.txt"
-    currentConfig_file = "{0}{1}{2}".format(currentConfig_dir, dir_separator, comp_name)
-    with open(currentConfig_file, 'w') as f:
-        f.write('version,' + str(version_num) +":")
-        for i in range(0,len(file_list)):
-            file_path = "{0}{1}{2}".format(currentConfig_dir, dir_separator, file_list[i])
-            f.write(file_list[i] +',' + md5sum(file_path) + ":")
-    return 0
-'''
 '''
 def md5sum1(filename):
     fd = open(filename,"rb")
@@ -241,45 +223,6 @@ if __name__ == '__main__':
         resource_download(needDownloadFile, version_num, comp_name, needMD5)
 
 '''
-        dir_separator = "\\"
-        for i in range(0,len(strFile)):
-            subFileInfo = strFile[i].split(",")
-            fileDir = "{0}{1}{2}".format(workSpaceDir, dir_separator, subFileInfo[0])
-            if os.path.exists(fileDir):
-                #如果存在该文件则进行MD5校验
-                fileMD5 = md5sum(fileDir)
-                if fileMD5 != subFileInfo[2] :
-                    #备份
-                    #将该文件加入下载文件的数组中
-                    needDownloadFile.append(strFile[i])
-            else:
-                #将该文件加入下载文件的数组中
-                needDownloadFile.append(strFile[i])
-    else：
-        #创建工作目录
-        #将所有文件加入下载文件的数组中
-        for i in range(0, len(strFile)):
-        file_list.append(sys.argv[i])
-'''
-    #判断有没有currentConfig文件
-'''    sys_type = platform.system()
-    if sys_type == 'Windows':
-        dir_separator = '\\'
-        currentConfig_dir = '.\\data\\temp\\ats-sms\\1001'
-    else:
-        dir_separator = '/'
-        currentConfig_dir = './data/temp'
-    comp_name = "currentConfig.txt"
-    currentConfig_file = "{0}{1}{2}".format(currentConfig_dir, dir_separator, comp_name)
-    if os.path.exists(currentConfig_file):
-        f_currentConfig = open('.\\data\\temp\\ats-sms\\1001\\currentConfig.txt',"r")
-        fcont = f_currentConfig.read()
-        f_config.close()
-        str_list = fcont.split(':')
-        substr_list = str_list[0].split(',')
-        current_version_num = substr_list[1]
-
-
     starttime = datetime.datetime.now()
     print (resource_download(file_list, version_num, comp_name))
     stoptime  = datetime.datetime.now()
